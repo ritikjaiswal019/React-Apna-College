@@ -2,6 +2,7 @@
 import './App.css';
 import Navbar from './components/navbar';
 import ProductList from './components/productlist.js'
+import React, {useState} from 'react';
 // import Footer from './components/footer.js'
 
 function App() {
@@ -17,10 +18,25 @@ function App() {
       quantity: 0,
     },
   ]
+
+  let [productList, setProductList] = useState(products);
+  const incrementQuantity = (index) => {
+    let newProductList = [...productList];
+    newProductList[index].quantity++;
+    setProductList(newProductList);
+  }
+  const decrementQuantity = (index) => {
+    let newProductList = [...productList];
+    newProductList[index].quantity = newProductList[index].quantity > 0 ? newProductList[index].quantity - 1 : 0;
+    setProductList(newProductList);
+  }
+
   return (
     <>
     <Navbar/>
-    <ProductList products={products}/>
+    <main className='container mt-5'>
+    <ProductList productList={productList} incrementQuantity={incrementQuantity} decrementQuantity={decrementQuantity}/>
+    </main>
     {/* <Footer/> */}
     </>
   );
